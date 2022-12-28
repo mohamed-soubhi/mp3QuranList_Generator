@@ -6,6 +6,8 @@ import pandas as pd
 import warnings
 warnings.filterwarnings("ignore")
 
+Surah_nums = ['']
+
 # Prompt the user for input on which Surahs to include in the playlist
 Surah_nums_inp = input('Enter the numbers of Surah separated by : OR , :-\n')
 
@@ -21,9 +23,9 @@ elif ',' in Surah_nums_inp:
     # If the input includes a list of numbers separated by commas (e.g. "1,2,3"), create a list from the input
     Surah_nums = Surah_nums_inp.replace(' ', '').split(',')
 else:
-    Surah_nums = Surah_nums_inp
+    Surah_nums[0] = int(Surah_nums_inp)
 
-print(Surah_nums)
+print(*Surah_nums, sep = ", ")
 
 # URL of the mp3quran API
 url = 'https://www.mp3quran.net/api/v3/reciters?language=ar'
