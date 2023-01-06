@@ -1,1 +1,1 @@
-py .\mp3Quran_Surah_list_VLC.py
+py .\Quran_Surah_list_VLC.py

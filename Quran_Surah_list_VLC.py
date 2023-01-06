@@ -1,10 +1,11 @@
-import csv
+# import csv
 import json
 import requests
 import pandas as pd
 
 import warnings
 warnings.filterwarnings("ignore")
+
 
 Surah_nums = ['']
 
