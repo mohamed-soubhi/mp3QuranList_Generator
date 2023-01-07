@@ -17,7 +17,8 @@ https://github.com/GlobalQuran/site/archive/v3.4.0.zip
 https://cdn.islamic.network/quran/audio/128/ar.alafasy/2826.mp3
 '''
 
-print('''
+print(''' 
+**** Repeate Quran V0.0.1 ****
 هذا البرنامج لاختيار أيات متتالية او سور محددة للتلاوة  لمختلف القراء 
 و يقدمها لك كقائمة تشغيل يمكن تشغيلها على جهازك 
 تطلب انترنت لتعمل 
@@ -387,7 +388,7 @@ def Surah_program():
 # if __name__ == '__main__' checks if a file is imported as a module or not.
 def main():
     while True:
-        choice = input("send [A] for ayat  \nsend [S] for complete suar")
+        choice = input("send [A] for ayat  \nsend [S] for complete suar\n")
         print(choice)
         if choice.lower() == 'a':
             Ayat_program()
