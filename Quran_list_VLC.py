@@ -296,7 +296,7 @@ def Surah_program():
     Surah_nums_inp = input('Enter the numbers of Surah separated by : OR , :-\n')
 
     # Generate a playlist name based on the user's input
-    playlist_name = ('quranList_' + Surah_nums_inp + '.xspf').replace(':', 'to').replace(',', 'and')
+    playlist_name = ('quranList_S' + Surah_nums_inp + '.xspf').replace(':', 'to_S').replace(',', 'and_S')
 
 
     # Process the user's input to create a list of Surah numbers
