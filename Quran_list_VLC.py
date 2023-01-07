@@ -24,7 +24,10 @@ print('''
 
 البرنامج قيد التجريب
 ننصح بإستخدام برنامج VLC
-فضلا انتظر للتحميل...
+فضلا انتظر للتحميل
+This program to play certain Ayat or Souar continously
+with diffrent readers 
+we recommend to use VLC player 
 Please wait for loading...
 '''
 )

@@ -1,1 +1,0 @@
-python ./playQuran10aya.py
