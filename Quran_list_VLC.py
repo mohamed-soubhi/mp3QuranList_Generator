@@ -345,7 +345,7 @@ def Surah_program():
             for surah in surah_list:
                 mp3Url = moshaf['server'] + f'{int(surah):03d}' +'.mp3'
                 mp3QuranURL.append(mp3Url)
-                df= df.append([reciter['id'],reciter['name'],reciter['letter'],moshaf['id'],moshaf['name'],surah,mp3Url])
+                df = pd.concat([df, pd.DataFrame([reciter['id'],reciter['name'],reciter['letter'],moshaf['id'],moshaf['name'],surah,mp3Url])], ignore_index=True)
                         
                 for Surah_num in Surah_nums:
                     if f'{int(Surah_num):03d}' in mp3Url :
@@ -402,3 +402,6 @@ def main():
 if __name__ == '__main__':
     # This code won't run if this file is imported.
     main()
+
+
+
