@@ -1,3 +1,5 @@
 *.xspf
 /__pycache__/quranLib_test.cpython-311-pytest-7.3.1.pyc
 /__pycache__/quranLib.cpython-311.pyc
+/radio.m3u
+/log.log

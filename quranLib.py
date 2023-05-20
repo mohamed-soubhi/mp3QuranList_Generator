@@ -84,29 +84,42 @@ class Ayat:
         log_file.write('\nSurah start '+ str(self.Surah_start) +' - '+ str(self.Surah_end) +' - '+ str(self.Ayah_start) +' - '+ str(self.Ayah_end) )
         
 
-    def __setattr__(self, name: str, value: Any) -> bool:
+    def __setattr__(self, name: str, value: Any) -> None:
         if name == "Surah_start":
             if isinstance(value, int) and value > 0 and value <= 114:
                 self.__dict__[name] = value
             else:
-                raise ValueError("Surah_start must be a non-negative integer")
+                raise ValueError("Surah_start must be a non-negative integer between 1&114")
         elif name == "Surah_end":
             if isinstance(value, int) and value >= self.Surah_start  and value <= 114:
                 self.__dict__[name] = value
             else:
-                raise ValueError("Surah_end must be a non-negative integerand greater than Surah_start")
+                raise ValueError("Surah_end must be a non-negative integerand greater than Surah_start and between 1&114")
         elif name == "Ayah_start":
-            #TODO: aya check for start , it should not exceed the max aya num of surah 
-            if isinstance(value, int) and value > 0:
+            if isinstance(value, int) and value > 0 and value <= surah_ayah_count[self.Surah_start]:
                 self.__dict__[name] = value
             else:
-                raise ValueError("Ayah_start must be a non-negative integerand greater than Surah_start")
+                raise ValueError("Ayah_start must be a non-negative integerand")
         elif name == "Ayah_end":
-            #TODO: aya check for start , it should not exceed the max aya num of surah and greater than Ayah_start
-            if isinstance(value, int) and value >= self.Ayah_start:
-                self.__dict__[name] = value
-            else:
-                raise ValueError("Ayah_end must be a non-negative integerand greater than Surah_start")
+            if self.Surah_end == self.Surah_start:                    
+                if ( isinstance(value, int) and 
+                     (value > self.Ayah_start) and 
+                     (value > 0) and 
+                     (value <= surah_ayah_count[self.Surah_start])
+                     ):
+                    self.__dict__[name] = value
+                else:
+                    raise ValueError("Ayah_end must be a non-negative integerand greater than Surah_start")
+            else:                    
+                if ( isinstance(value, int) and
+                     (value <= surah_ayah_count[self.Surah_start]) and
+                     (value > 0) and 
+                     (value > self.Ayah_start) 
+                     ):
+                    self.__dict__[name] = value
+                else:
+                    raise ValueError("Ayah_end must be a non-negative integerand greater than Surah_start")
+
         log_file.write('\nset '+ str(name) +' - '+ str(value) )
 
             
@@ -115,123 +128,20 @@ class Ayat:
 
 
 # Global variables
- #list
-Surah_ayah_max = [
-                    [ 1 , 7 ],
-                    [ 2 , 286 ],
-                    [ 3 , 200 ],
-                    [ 4 , 176 ],
-                    [ 5 , 120 ],
-                    [ 6 , 165 ],
-                    [ 7 , 206 ],
-                    [ 8 , 75 ],
-                    [ 9 , 129 ],
-                    [ 10 , 109 ],
-                    [ 11 , 123 ],
-                    [ 12 , 111 ],
-                    [ 13 , 43 ],
-                    [ 14 , 52 ],
-                    [ 15 , 99 ],
-                    [ 16 , 128 ],
-                    [ 17 , 111 ],
-                    [ 18 , 110 ],
-                    [ 19 , 98 ],
-                    [ 20 , 135 ],
-                    [ 21 , 112 ],
-                    [ 22 , 78 ],
-                    [ 23 , 118 ],
-                    [ 24 , 64 ],
-                    [ 25 , 77 ],
-                    [ 26 , 227 ],
-                    [ 27 , 93 ],
-                    [ 28 , 88 ],
-                    [ 29 , 69 ],
-                    [ 30 , 60 ],
-                    [ 31 , 34 ],
-                    [ 32 , 30 ],
-                    [ 33 , 73 ],
-                    [ 34 , 54 ],
-                    [ 35 , 45 ],
-                    [ 36 , 83 ],
-                    [ 37 , 182 ],
-                    [ 38 , 88 ],
-                    [ 39 , 75 ],
-                    [ 40 , 85 ],
-                    [ 41 , 54 ],
-                    [ 42 , 53 ],
-                    [ 43 , 89 ],
-                    [ 44 , 59 ],
-                    [ 45 , 37 ],
-                    [ 46 , 35 ],
-                    [ 47 , 38 ],
-                    [ 48 , 29 ],
-                    [ 49 , 18 ],
-                    [ 50 , 45 ],
-                    [ 51 , 60 ],
-                    [ 52 , 49 ],
-                    [ 53 , 62 ],
-                    [ 54 , 55 ],
-                    [ 55 , 78 ],
-                    [ 56 , 96 ],
-                    [ 57 , 29 ],
-                    [ 58 , 22 ],
-                    [ 59 , 24 ],
-                    [ 60 , 13 ],
-                    [ 61 , 14 ],
-                    [ 62 , 11 ],
-                    [ 63 , 11 ],
-                    [ 64 , 18 ],
-                    [ 65 , 12 ],
-                    [ 66 , 12 ],
-                    [ 67 , 30 ],
-                    [ 68 , 52 ],
-                    [ 69 , 52 ],
-                    [ 70 , 44 ],
-                    [ 71 , 28 ],
-                    [ 72 , 28 ],
-                    [ 73 , 20 ],
-                    [ 74 , 56 ],
-                    [ 75 , 40 ],
-                    [ 76 , 31 ],
-                    [ 77 , 50 ],
-                    [ 78 , 40 ],
-                    [ 79 , 46 ],
-                    [ 80 , 42 ],
-                    [ 81 , 29 ],
-                    [ 82 , 19 ],
-                    [ 83 , 36 ],
-                    [ 84 , 25 ],
-                    [ 85 , 22 ],
-                    [ 86 , 17 ],
-                    [ 87 , 19 ],
-                    [ 88 , 26 ],
-                    [ 89 , 30 ],
-                    [ 90 , 20 ],
-                    [ 91 , 15 ],
-                    [ 92 , 21 ],
-                    [ 93 , 11 ],
-                    [ 94 , 8 ],
-                    [ 95 , 8 ],
-                    [ 96 , 19 ],
-                    [ 97 , 5 ],
-                    [ 98 , 8 ],
-                    [ 99 , 8 ],
-                    [ 100 , 11 ],
-                    [ 101 , 11 ],
-                    [ 102 , 8 ],
-                    [ 103 , 3 ],
-                    [ 104 , 9 ],
-                    [ 105 , 5 ],
-                    [ 106 , 4 ],
-                    [ 107 , 7 ],
-                    [ 108 , 3 ],
-                    [ 109 , 6 ],
-                    [ 110 , 3 ],
-                    [ 111 , 5 ],
-                    [ 112 , 4 ],
-                    [ 113 , 5 ],
-                    [ 114 , 6 ],
-                ]
+surah_ayah_count = {
+    1: 7, 2: 286, 3: 200, 4: 176, 5: 120, 6: 165, 7: 206, 8: 75, 9: 129, 10: 109,
+    11: 123, 12: 111, 13: 43, 14: 52, 15: 99, 16: 128, 17: 111, 18: 110, 19: 98,
+    20: 135, 21: 112, 22: 78, 23: 118, 24: 64, 25: 77, 26: 227, 27: 93, 28: 88,
+    29: 69, 30: 60, 31: 34, 32: 30, 33: 73, 34: 54, 35: 45, 36: 83, 37: 182, 38: 88,
+    39: 75, 40: 85, 41: 54, 42: 53, 43: 89, 44: 59, 45: 37, 46: 35, 47: 38, 48: 29,
+    49: 18, 50: 45, 51: 60, 52: 49, 53: 62, 54: 55, 55: 78, 56: 96, 57: 29, 58: 22,
+    59: 24, 60: 13, 61: 14, 62: 11, 63: 11, 64: 18, 65: 12, 66: 12, 67: 30, 68: 52,
+    69: 52, 70: 44, 71: 28, 72: 28, 73: 20, 74: 56, 75: 40, 76: 31, 77: 50, 78: 40,
+    79: 46, 80: 42, 81: 29, 82: 19, 83: 36, 84: 25, 85: 22, 86: 17, 87: 19, 88: 26,
+    89: 30, 90: 20, 91: 15, 92: 21, 93: 11, 94: 8, 95: 8, 96: 19, 97: 5, 98: 8,
+    99: 8, 100: 11, 101: 11, 102: 8, 103: 3, 104: 9, 105: 5, 106: 4, 107: 7, 108: 3,
+    109: 6, 110: 3, 111: 5, 112: 4, 113: 5, 114: 6,
+}
 
 #TODO: to be replaced by json 
 Quraa2 = [
